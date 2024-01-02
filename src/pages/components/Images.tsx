@@ -8,35 +8,48 @@ type Props = {
 	order: number[]
 }
 
+const log = (message: string) => {
+	message = `[${new Date().toLocaleTimeString("en-SG")}] ${message}`
+
+	console.log(message)
+	fetch("/api/log", {
+		method: "POST",
+		body: message,
+	})
+}
+
 export default function Images({ duration, list, order }: Props) {
 	const [timeout, setTimeout] = useState<NodeJS.Timeout | null>(null)
 	const [index, setIndex] = useState(0)
 
 	const toggle = () => {
 		if (timeout) {
-			console.log("pausing")
+			log("PAUSE")
 			clearInterval(timeout)
 			setTimeout(null)
 		} else {
-			console.log("resuming")
+			log("RESUME")
 			setTimeout(setInterval(next, duration))
 		}
 	}
 
 	const prev = () => {
-		console.log("prev")
+		log("PREV")
 		setIndex(i => (i === 0 ? list.length - 1 : i - 1))
 	}
 
 	const next = () => {
-		console.log("next")
+		log("NEXT")
 		setIndex(i => (i + 1) % list.length)
 	}
 
-	useEffect(toggle, [])
+	useEffect(() => {
+		log(`START: ${list.length} images, ${duration}ms duration`)
+		toggle()
+	}, [])
 
 	useEffect(() => {
-		console.log(index, order[index])
+		log(`INDEX: ${index}, IN-ORDER: ${order[index]}, NAME: ${list[order[index]]}`)
 	}, [order, index])
 
 	useEffect(() => {
