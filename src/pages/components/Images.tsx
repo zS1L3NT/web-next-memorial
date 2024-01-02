@@ -53,6 +53,11 @@ export default function Images({ duration, list, order }: Props) {
 	}, [order, index])
 
 	useEffect(() => {
+		new Image().src =
+			"/api/image?name=" + encodeURIComponent(list[order[(index + 1) % list.length]])
+	}, [index])
+
+	useEffect(() => {
 		const onkeydown = (e: KeyboardEvent) => {
 			if (e.key === "ArrowLeft") prev()
 			if (e.key === "ArrowRight") next()
