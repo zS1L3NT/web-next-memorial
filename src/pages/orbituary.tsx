@@ -11,7 +11,7 @@ type Props = {
 export default function Index({ list, order }: Props) {
 	return (
 		<Images
-			duration={5 * 60 * 1000}
+			duration={60 * 1000}
 			list={list}
 			order={order}
 		/>
