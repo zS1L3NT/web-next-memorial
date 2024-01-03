@@ -53,8 +53,7 @@ export default function Images({ duration, list, order }: Props) {
 	}, [order, index])
 
 	useEffect(() => {
-		new Image().src =
-			"/api/image?name=" + encodeURIComponent(list[order[(index + 1) % list.length]])
+		new Image().src = encodeURIComponent(list[order[(index + 1) % list.length]])
 	}, [index])
 
 	useEffect(() => {
@@ -72,7 +71,7 @@ export default function Images({ duration, list, order }: Props) {
 		<AnimatePresence>
 			<motion.img
 				key={index}
-				src={"/api/image?name=" + encodeURIComponent(list[order[index]])}
+				src={encodeURIComponent(list[order[index]])}
 				transition={{ duration: 2 }}
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
